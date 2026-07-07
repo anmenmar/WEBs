@@ -4,107 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrea Méndez Marí — Portafolio</title>
+    
+    <!-- Conectamos la tipografía Syne de Google Fonts -->
+    <link rel=preconnect href="https://fonts.googleapis.com">
+    <link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Syne:wght@700;800&display=swap" rel=stylesheet>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        /* Reset y configuración de cursor */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Forzamos que en pantallas grandes no se vea el ratón normal */
+        @media (pointer: fine) {
+            body, a, div { cursor: none !important; }
+        }
+
         body {
-            background-color: #0a0a0a;
+            background-color: #080808;
             color: #f5f5f7;
-            font-family: sans-serif;
+            font-family: 'Syne', sans-serif;
             overflow-x: hidden;
             position: relative;
         }
-        /* Grano Analógico */
+
+        /* Capa de Grano Analógico Dinámico */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            opacity: 0.04;
+            opacity: 0.05;
             pointer-events: none;
             z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
-        /* Cursor Círculo */
+
+        /* EL CURSOR MAGNÉTICO CON INVERSIÓN DE COLOR */
         #custom-cursor {
-            width: 30px; height: 30px;
-            border: 2px solid #ffffff;
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
             border-radius: 50%;
             position: fixed;
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 10000;
-            transition: transform 0.08s ease-out;
+            /* Este truco mezcla los colores e invierte lo que toca */
+            mix-blend-mode: difference; 
+            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s, height 0.3s;
         }
-        /* Hero */
+
+        /* Seccion Hero Principal */
         .hero {
-            min-height: 90vh;
+            min-height: 95vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 5vw;
+            padding: 6vw;
         }
+
+        /* Tu nombre con interlineado corregido y tipografía Syne */
         .huge-title {
-            font-size: 10vw;
-            font-weight: 900;
-            line-height: 0.85;
+            font-size: 9.5vw;
+            font-weight: 800;
+            line-height: 1.1; /* Separación corregida para acentos */
             text-transform: uppercase;
-            font-family: 'Arial Black', sans-serif;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.03em;
+            color: #ffffff;
         }
+
+        /* Texto Humano y fluido */
         .manifesto {
-            margin-top: 4vh;
-            max-width: 450px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #86868b;
-            font-family: 'Courier New', Courier, monospace;
+            margin-top: 6vh;
+            max-width: 500px;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #a1a1a6;
+            font-family: 'Courier Prime', monospace; /* Toque editorial/proceso */
         }
-        /* Bento Grid */
+
+        /* La Rejilla Bento Orgánica (Menos plana) */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            padding: 0 5vw 10vh 5vw;
+            gap: 30px;
+            padding: 0 6vw 15vh 6vw;
         }
+
+        /* Tarjetas con volumen, bordes finos y profundidad */
         .bento-item {
-            background-color: #141414;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 40px;
-            min-height: 300px;
+            background: linear-gradient(145deg, #121212, #181818);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.5);
+            border-radius: 24px;
+            padding: 45px;
+            min-height: 340px;
             display: flex;
             align-items: flex-end;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s, background 0.5s;
         }
-        .bento-item.large { grid-column: span 2; min-height: 450px; }
+
+        .bento-item.large {
+            grid-column: span 2;
+            min-height: 480px;
+        }
+
+        /* Info de Proyecto */
         .project-info h3 {
-            font-family: 'Arial Black', sans-serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            font-weight: 700;
             letter-spacing: -0.02em;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
+
         .project-info p {
             color: #86868b;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.95rem;
         }
+
+        /* INTERACCIÓN AL PASAR EL RATÓN (Hover de alto impacto) */
         .bento-item:hover {
-            transform: translateY(-5px);
-            border-color: #f5f5f7;
-            background-color: #1f1f23;
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #16161a, #202025);
+        }
+
+        /* Animación para agrandar el cursor al pasar por proyectos o títulos */
+        .expand-cursor:hover ~ #custom-cursor {
+            transform: translate(-50%, -50%) scale(1.5);
         }
     </style>
 </head>
 <body>
 
+    <!-- El círculo mágico del cursor -->
     <div id="custom-cursor"></div>
 
+    <!-- Zona de Bienvenida -->
     <section class="hero">
         <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
-        <p class="manifesto">Creativa multidisciplinar. Diseñando conceptos analógicos, identidades visuales y experiencias digitales de vanguardia.</p>
+        <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas, packaging con concepto e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
+    <!-- Proyectos Bento con profundidad -->
     <section class="bento-grid">
         <div class="bento-item large">
             <div class="project-info">
@@ -127,10 +172,20 @@
     </section>
 
     <script>
+        // Movimiento ultra-fluido del cursor interactivo
         const cursor = document.getElementById('custom-cursor');
+        
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+        });
+
+        // Ocultar cursor si sale de la ventana
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
         });
     </script>
 </body>
