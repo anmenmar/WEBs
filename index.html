@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrea Méndez Marí — Portafolio</title>
     
-    <!-- Conectamos la tipografía Outfit desde Google Fonts con todos sus pesos -->
+    <!-- Mantenemos la tipografía Outfit que elegiste -->
     <link rel=preconnect href="https://fonts.googleapis.com">
     <link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;700;900&display=swap" rel=stylesheet>
+    <link href="https://fonts.googleapis.com/css2 family=Outfit:wght@300;400;800;900&display=swap" rel=stylesheet>
 
     <style>
         /* Reset y configuración de cursor */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Ocultamos el puntero por defecto en ordenadores para usar el interactivo */
         @media (pointer: fine) {
             body, a, div, section { cursor: none !important; }
         }
 
         body {
-            background-color: #000000;
+            background-color: #121212; /* Fondo inicial neutro oscuro */
             color: #ffffff;
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             position: relative;
+            /* Transición suave para que el fondo cambie de color como seda */
+            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Capa de Grano Analógico Dinámico */
@@ -32,76 +33,73 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            opacity: 0.04;
+            opacity: 0.06;
             pointer-events: none;
             z-index: 9999;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* EL CURSOR MAGNÉTICO CON INVERSIÓN DE COLOR */
+        /* CURSOR FLUIDO Y VIBRANTE (Aporta el toque de color digital) */
         #custom-cursor {
-            width: 40px;
-            height: 40px;
+            width: 25px;
+            height: 25px;
             background-color: #ffffff;
             border-radius: 50%;
             position: fixed;
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 10000;
-            /* Invierte el color de lo que toca (blanco sobre negro, negro sobre blanco) */
-            mix-blend-mode: difference; 
-            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
+            mix-blend-mode: exclusion; /* Crea un contraste orgánico precioso con los colores */
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s;
         }
 
-        /* Seccion Hero Principal */
+        /* Sección Hero */
         .hero {
-            min-height: 95vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 6vw;
         }
 
-        /* Tu nombre en Outfit Peso Máximo (900) */
         .huge-title {
             font-size: 11vw;
             font-weight: 900;
             line-height: 0.95;
             text-transform: uppercase;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.04em;
         }
 
-        /* Tu texto real en Outfit Peso Ligero (300) */
         .manifesto {
-            margin-top: 6vh;
-            max-width: 520px;
+            margin-top: 5vh;
+            max-width: 540px;
             font-size: 1.3rem;
             font-weight: 300;
             line-height: 1.6;
-            color: #cccccc;
-            letter-spacing: -0.01em;
+            color: #e0e0e0;
         }
 
-        /* La Rejilla Bento Orgánica */
+        /* Grid de Proyectos Líquidos */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            gap: 40px;
             padding: 0 6vw 15vh 6vw;
         }
 
-        /* Tarjetas con volumen sutil (ADN Visual 2026) */
+        /* Tarjetas flotantes y limpias, el color lo da el fondo de la web */
         .bento-item {
-            background-color: #0b0b0b;
+            background-color: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 45px;
-            min-height: 340px;
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 50px;
+            min-height: 360px;
             display: flex;
             align-items: flex-end;
             position: relative;
             overflow: hidden;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s, background-color 0.5s;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, background-color 0.4s;
         }
 
         .bento-item.large {
@@ -109,55 +107,52 @@
             min-height: 480px;
         }
 
-        /* Info de Proyecto con juego de pesos de Outfit */
         .project-info h3 {
-            font-size: 2.4rem;
-            font-weight: 700; /* Outfit Bold */
+            font-size: 2.6rem;
+            font-weight: 800;
             letter-spacing: -0.03em;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .project-info p {
-            color: #888888;
-            font-weight: 300; /* Outfit Light */
-            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            font-size: 1.05rem;
         }
 
-        /* Hover de las tarjetas */
+        /* Comportamiento Hover de las Tarjetas */
         .bento-item:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.4);
-            background-color: #111111;
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
 <body>
 
-    <!-- El círculo mágico del cursor -->
     <div id="custom-cursor"></div>
 
-    <!-- Zona de Bienvenida -->
     <section class="hero">
         <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
         <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
-    <!-- Proyectos Bento con Outfit -->
+    <!-- Añadimos "data-color" a cada tarjeta para decirle de qué color se tiñe la web al pasar el ratón -->
     <section class="bento-grid">
-        <div class="bento-item large">
+        <div class="bento-item large" data-color="#3a2521"> <!-- Tono terracota/arcilla para CatBox -->
             <div class="project-info">
                 <h3>CATBOX</h3>
                 <p>Packaging & Branding Conceptual</p>
             </div>
         </div>
-        <div class="bento-item">
+        <div class="bento-item" data-color="#242e25"> <!-- Tono verde oliva/papel para Km 0 -->
             <div class="project-info">
                 <h3>KM 0</h3>
                 <p>Diseño Editorial & Epub</p>
             </div>
         </div>
-        <div class="bento-item">
+        <div class="bento-item" data-color="#19243a"> <!-- Tono azul cobalto/arte para CB Hoyo -->
             <div class="project-info">
                 <h3>CB HOYO COLLAB</h3>
                 <p>Animación Web & Contenido Digital</p>
@@ -166,22 +161,30 @@
     </section>
 
     <script>
-        // Movimiento ultra-fluido del cursor interactivo
         const cursor = document.getElementById('custom-cursor');
+        const body = document.body;
         
+        // Movimiento del cursor
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Efecto reactivo: cuando pasas por encima de cualquier tarjeta o texto, el cursor se expande sutilmente
-        const bentoItems = document.querySelectorAll('.bento-item, .huge-title, .manifesto');
+        // LÓGICA DE INTERACCIÓN CROMÁTICA
+        const bentoItems = document.querySelectorAll('.bento-item');
+        
         bentoItems.forEach(item => {
+            // Cuando el ratón entra a la tarjeta
             item.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1.4)';
+                const newColor = item.getAttribute('data-color');
+                body.style.backgroundColor = newColor; // Cambia el fondo de la web
+                cursor.style.transform = 'translate(-50%, -50%) scale(2.2)'; // Agranda el cursor
             });
+            
+            // Cuando el ratón sale de la tarjeta
             item.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                body.style.backgroundColor = '#121212'; // Vuelve al color oscuro neutro
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)'; // El cursor vuelve a su tamaño
             });
         });
     </script>
