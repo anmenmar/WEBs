@@ -12,20 +12,21 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        /* Ocultamos el cursor del sistema para que la luz sea la protagonista */
         @media (pointer: fine) {
             body, a, div, section { cursor: none !important; }
         }
 
         body {
-            background-color: #f2f1ed; /* Fondo marfil/seda claro */
-            color: #1a1a1a; /* Texto oscuro para contraste elegante */
+            background-color: #f2f1ed; 
+            color: #1a1a1a; 
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
         }
 
-        /* Capa de Grano Analógico sobre fondo claro */
+        /* Capa de Grano Analógico */
         body::before {
             content: "";
             position: fixed;
@@ -36,34 +37,20 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* EL DEGRADADO LÍQUIDO SUBTERRÁNEO */
-        #bg-gradient {
+        /* EL EFECTO TORNASOLADO / ARCOÍRIS SUBTERRÁNEO */
+        #tornasol-cursor {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(220,210,195,0.8) 0%, rgba(242,241,237,0) 70%);
+            width: 450px;
+            height: 450px;
+            /* Gradiente cónico que emula el espectro de un CD o una pompa de jabón */
+            background: conic-gradient(from 0deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #ff9a9e);
             border-radius: 50%;
             z-index: -1;
-            filter: blur(80px);
-            transition: background 1s ease, left 0.8s cubic-bezier(0.16, 1, 0.3, 1), top 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(60px);
+            opacity: 0; /* Empieza invisible y se enciende al mover el ratón */
             pointer-events: none;
-        }
-
-        /* Cursor interactivo invertido (ahora es oscuro sobre fondo claro) */
-        #custom-cursor {
-            width: 25px;
-            height: 25px;
-            background-color: #000000;
-            border-radius: 50%;
-            position: fixed;
             transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 10000;
-            mix-blend-mode: difference;
-            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.5s ease, transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Hero */
@@ -73,6 +60,8 @@
             flex-direction: column;
             justify-content: center;
             padding: 6vw;
+            position: relative;
+            z-index: 2;
         }
 
         .huge-title {
@@ -99,14 +88,16 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 40px;
             padding: 0 6vw 15vh 6vw;
+            position: relative;
+            z-index: 2;
         }
 
-        /* EFECTO VIDRIO (GLASSMORPHISM) PREMIUM */
+        /* LAS TARJETAS DE VIDRIO QUE REFRACTAN EL TORNASOL */
         .bento-item {
-            background: rgba(255, 255, 255, 0.25); /* Transparencia de vidrio */
-            border: 1px solid rgba(255, 255, 255, 0.4); /* Brillo del borde del cristal */
-            backdrop-filter: blur(16px); /* El desenfoque clave del vidrio */
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.15); /* Vidrio translúcido */
+            border: 1px solid rgba(255, 255, 255, 0.45); /* Reflejo del borde */
+            backdrop-filter: blur(25px); /* Desenfoque potente de cristal esmerilado */
+            -webkit-backdrop-filter: blur(25px);
             border-radius: 32px;
             padding: 50px;
             min-height: 360px;
@@ -114,13 +105,18 @@
             align-items: flex-end;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255,255,255,0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255,255,255,0.6);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, background-color 0.4s, box-shadow 0.4s;
         }
 
         .bento-item.large {
             grid-column: span 2;
             min-height: 460px;
+        }
+
+        .project-info {
+            position: relative;
+            z-index: 3;
         }
 
         .project-info h3 {
@@ -133,47 +129,44 @@
         }
 
         .project-info p {
-            color: #666666;
+            color: #555555;
             font-weight: 400;
             font-size: 1.05rem;
         }
 
-        /* Hover de las tarjetas de cristal */
+        /* Al pasar el ratón, el vidrio se pule y brilla más */
         .bento-item:hover {
             transform: translateY(-6px);
-            border-color: rgba(255, 255, 255, 0.7);
-            background-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+            border-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
-    
-    <!-- Este es el degradado que se moverá y cambiará de color detrás del vidrio -->
-    <div id="bg-gradient"></div>
+    <!-- La mancha arcoíris tornasolada que sigue al ratón por debajo del vidrio -->
+    <div id="tornasol-cursor"></div>
 
     <section class="hero">
         <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
         <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
-    <!-- Configuramos los colores del degradado suave para cada proyecto -->
     <section class="bento-grid">
-        <div class="bento-item large" data-color="rgba(235, 180, 165, 0.7)"> <!-- Terracota sutil para CatBox -->
+        <div class="bento-item large">
             <div class="project-info">
                 <h3>CATBOX</h3>
                 <p>Packaging & Branding Conceptual</p>
             </div>
         </div>
-        <div class="bento-item" data-color="rgba(185, 200, 180, 0.7)"> <!-- Verde musgo suave para Km 0 -->
+        <div class="bento-item">
             <div class="project-info">
                 <h3>KM 0</h3>
                 <p>Diseño Editorial & Epub</p>
             </div>
         </div>
-        <div class="bento-item" data-color="rgba(175, 195, 220, 0.7)"> <!-- Azul empolvado para CB Hoyo -->
+        <div class="bento-item">
             <div class="project-info">
                 <h3>CB HOYO COLLAB</h3>
                 <p>Animación Web & Contenido Digital</p>
@@ -182,39 +175,18 @@
     </section>
 
     <script>
-        const cursor = document.getElementById('custom-cursor');
-        const gradient = document.getElementById('bg-gradient');
+        const tornasol = document.getElementById('tornasol-cursor');
         
-        // Movimiento del cursor
+        // El tornasol sigue al ratón y se vuelve visible solo cuando se mueve
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            tornasol.style.opacity = '0.75'; // Intensidad del efecto tornasolado
+            tornasol.style.left = e.clientX + 'px';
+            tornasol.style.top = e.clientY + 'px';
         });
 
-        const bentoItems = document.querySelectorAll('.bento-item');
-        
-        bentoItems.forEach(item => {
-            item.addEventListener('mouseenter', (e) => {
-                const newColor = item.getAttribute('data-color');
-                
-                // Cambiamos el color de la esfera del fondo
-                gradient.style.background = `radial-gradient(circle, ${newColor} 0%, rgba(242,241,237,0) 70%)`;
-                
-                // Movemos la esfera de fondo hacia donde está la tarjeta flotando
-                const rect = item.getBoundingClientRect();
-                gradient.style.left = `${rect.left + rect.width/2}px`;
-                gradient.style.top = `${rect.top + window.scrollY + rect.height/2}px`;
-                
-                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-            });
-            
-            item.addEventListener('mouseleave', () => {
-                // Volvemos al estado inicial neutro y centrado
-                gradient.style.background = 'radial-gradient(circle, rgba(220,210,195,0.5) 0%, rgba(242,241,237,0) 70%)';
-                gradient.style.left = '50%';
-                gradient.style.top = '50%';
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
+        // Si el ratón sale de la pantalla, apagamos la luz
+        document.addEventListener('mouseleave', () => {
+            tornasol.style.opacity = '0';
         });
     </script>
 </body>
