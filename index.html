@@ -60,6 +60,53 @@
             color: #86868b;
         }
     </style>
+/* Estilos de la Rejilla Bento Líquida */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 280px;
+            gap: 25px;
+            padding: 0 5vw 10vh 5vw;
+        }
+
+        /* Comportamiento de cada Tarjeta */
+        .bento-item {
+            background-color: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Modificadores de tamaño asimétrico */
+        .bento-item.large { grid-column: span 2; grid-row: span 2; background-color: #1a1a1a; }
+        .bento-item.tall { grid-row: span 2; }
+        .bento-item.medium { grid-column: span 1; }
+        .bento-item.wide { grid-column: span 2; }
+
+        /* Textos dentro de los proyectos */
+        .project-info h3 {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .project-info p {
+            color: #86868b;
+            font-size: 0.9rem;
+        }
+
+        /* EFECTO INTERACTIVO: Al pasar el ratón por la tarjeta */
+        .bento-item:hover {
+            transform: translateY(-5px);
+            border-color: #f5f5f7;
+            background-color: #1f1f23;
+        }
 </head>
 <body>
 
@@ -70,6 +117,42 @@
     <section class="hero">
         <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
         <p class="manifesto">Creativa multidisciplinar. Diseñando conceptos analógicos, identidades visuales y experiencias digitales de vanguardia.</p>
+    </section>
+<!-- SECCIÓN PORTAFOLIO: BENTO ASIMÉTRICA -->
+    <section class="bento-grid">
+        
+        <!-- Proyecto 1: Grande e Impactante (ej. CatBox o Reel) -->
+        <div class="bento-item large">
+            <div class="project-info">
+                <h3>CATBOX</h3>
+                <p>Packaging & Branding Conceptual</p>
+            </div>
+        </div>
+
+        <!-- Proyecto 2: Vertical y Estilizado (ej. Km 0 Editorial) -->
+        <div class="bento-item tall">
+            <div class="project-info">
+                <h3>KM 0</h3>
+                <p>Diseño Editorial & Epub</p>
+            </div>
+        </div>
+
+        <!-- Proyecto 3: Cuadrado Dinámico (ej. CB Hoyo) -->
+        <div class="bento-item medium">
+            <div class="project-info">
+                <h3>CB HOYO COLLAB</h3>
+                <p>Animación Web & Contenido Digital</p>
+            </div>
+        </div>
+
+        <!-- Proyecto 4: Formato Alargado (ej. WOMAD Festival) -->
+        <div class="bento-item wide">
+            <div class="project-info">
+                <h3>WOMAD FESTIVAL</h3>
+                <p>Identidad Visual & Campaña</p>
+            </div>
+        </div>
+
     </section>
 
     <script>
