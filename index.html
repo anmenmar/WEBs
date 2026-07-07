@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrea Méndez Marí — Portafolio</title>
     
-    <!-- Conectamos la tipografía Syne de Google Fonts -->
+    <!-- Conectamos la tipografía Outfit desde Google Fonts con todos sus pesos -->
     <link rel=preconnect href="https://fonts.googleapis.com">
     <link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Syne:wght@700;800&display=swap" rel=stylesheet>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;700;900&display=swap" rel=stylesheet>
 
     <style>
         /* Reset y configuración de cursor */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Forzamos que en pantallas grandes no se vea el ratón normal */
+        /* Ocultamos el puntero por defecto en ordenadores para usar el interactivo */
         @media (pointer: fine) {
-            body, a, div { cursor: none !important; }
+            body, a, div, section { cursor: none !important; }
         }
 
         body {
-            background-color: #080808;
-            color: #f5f5f7;
-            font-family: 'Syne', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             position: relative;
         }
@@ -32,7 +32,7 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            opacity: 0.05;
+            opacity: 0.04;
             pointer-events: none;
             z-index: 9999;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -48,9 +48,9 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 10000;
-            /* Este truco mezcla los colores e invierte lo que toca */
+            /* Invierte el color de lo que toca (blanco sobre negro, negro sobre blanco) */
             mix-blend-mode: difference; 
-            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s, height 0.3s;
+            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Seccion Hero Principal */
@@ -62,27 +62,27 @@
             padding: 6vw;
         }
 
-        /* Tu nombre con interlineado corregido y tipografía Syne */
+        /* Tu nombre en Outfit Peso Máximo (900) */
         .huge-title {
-            font-size: 9.5vw;
-            font-weight: 800;
-            line-height: 1.1; /* Separación corregida para acentos */
+            font-size: 11vw;
+            font-weight: 900;
+            line-height: 0.95;
             text-transform: uppercase;
-            letter-spacing: -0.03em;
-            color: #ffffff;
+            letter-spacing: -0.05em;
         }
 
-        /* Texto Humano y fluido */
+        /* Tu texto real en Outfit Peso Ligero (300) */
         .manifesto {
             margin-top: 6vh;
-            max-width: 500px;
-            font-size: 1.2rem;
-            line-height: 1.7;
-            color: #a1a1a6;
-            font-family: 'Courier Prime', monospace; /* Toque editorial/proceso */
+            max-width: 520px;
+            font-size: 1.3rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: #cccccc;
+            letter-spacing: -0.01em;
         }
 
-        /* La Rejilla Bento Orgánica (Menos plana) */
+        /* La Rejilla Bento Orgánica */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -90,11 +90,10 @@
             padding: 0 6vw 15vh 6vw;
         }
 
-        /* Tarjetas con volumen, bordes finos y profundidad */
+        /* Tarjetas con volumen sutil (ADN Visual 2026) */
         .bento-item {
-            background: linear-gradient(145deg, #121212, #181818);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.5);
+            background-color: #0b0b0b;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 45px;
             min-height: 340px;
@@ -102,7 +101,7 @@
             align-items: flex-end;
             position: relative;
             overflow: hidden;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s, background 0.5s;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s, background-color 0.5s;
         }
 
         .bento-item.large {
@@ -110,31 +109,26 @@
             min-height: 480px;
         }
 
-        /* Info de Proyecto */
+        /* Info de Proyecto con juego de pesos de Outfit */
         .project-info h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 8px;
+            font-size: 2.4rem;
+            font-weight: 700; /* Outfit Bold */
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
 
         .project-info p {
-            color: #86868b;
-            font-family: 'Courier Prime', monospace;
-            font-size: 0.95rem;
+            color: #888888;
+            font-weight: 300; /* Outfit Light */
+            font-size: 1rem;
         }
 
-        /* INTERACCIÓN AL PASAR EL RATÓN (Hover de alto impacto) */
+        /* Hover de las tarjetas */
         .bento-item:hover {
-            transform: translateY(-8px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.3);
-            background: linear-gradient(145deg, #16161a, #202025);
-        }
-
-        /* Animación para agrandar el cursor al pasar por proyectos o títulos */
-        .expand-cursor:hover ~ #custom-cursor {
-            transform: translate(-50%, -50%) scale(1.5);
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.4);
+            background-color: #111111;
         }
     </style>
 </head>
@@ -146,10 +140,10 @@
     <!-- Zona de Bienvenida -->
     <section class="hero">
         <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
-        <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas, packaging con concepto e historias visuales que saltan del papel a la pantalla.</p>
+        <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
-    <!-- Proyectos Bento con profundidad -->
+    <!-- Proyectos Bento con Outfit -->
     <section class="bento-grid">
         <div class="bento-item large">
             <div class="project-info">
@@ -180,12 +174,15 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Ocultar cursor si sale de la ventana
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-        });
-        document.addEventListener('mouseenter', () => {
-            cursor.style.opacity = '1';
+        // Efecto reactivo: cuando pasas por encima de cualquier tarjeta o texto, el cursor se expande sutilmente
+        const bentoItems = document.querySelectorAll('.bento-item, .huge-title, .manifesto');
+        bentoItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.4)';
+            });
+            item.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
         });
     </script>
 </body>
