@@ -5,236 +5,247 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrea Méndez Marí — Portafolio</title>
     
-    <!-- Conectamos Syne para titulares y Outfit para textos limpios -->
     <link rel=preconnect href="https://fonts.googleapis.com">
     <link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&family=Syne:wght@700;800&display=swap" rel=stylesheet>
+    <!-- Usamos Outfit pero en sus pesos más ligeros y elegantes, nada tosco -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&display=swap" rel=stylesheet>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @media (pointer: fine) {
-            body, a, div, section { cursor: none !important; }
+            body, a, .project-row { cursor: none !important; }
         }
 
         body {
-            background-color: #f2f1ed; 
+            background-color: #f7f6f3; /* Fondo seda clarísimo */
             color: #1a1a1a; 
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
-            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: background-color 0.8s ease;
         }
 
-        /* Capa de Grano Analógico */
+        /* Grano analógico sutil */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            opacity: 0.07;
+            opacity: 0.05;
             pointer-events: none;
             z-index: 9999;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 1. EL PUNTO DEL RATÓN (PRECISO) */
-        #custom-point {
-            width: 8px;
-            height: 8px;
-            background-color: #1a1a1a;
+        /* El punto del cursor: ahora es un anillo fino y elegante */
+        #custom-cursor {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #1a1a1a;
             border-radius: 50%;
             position: fixed;
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 10001;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.2s, background-color 0.2s, width 0.3s, height 0.3s;
         }
 
-        /* 2. EL HALO ARCOÍRIS TORNASOLADO */
-        #tornasol-blur {
+        /* LA VENTANA DE CRISTAL FLOTANTE (Aparece al pasar por los proyectos) */
+        #project-preview {
             position: fixed;
-            width: 450px;
-            height: 450px;
-            background: conic-gradient(from 0deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #ff9a9e);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(65px);
-            opacity: 0;
+            width: 320px;
+            height: 220px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.5);
             pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.5s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* Hero */
-        .hero {
-            min-height: 90vh;
+            z-index: 10000;
+            transform: translate(-50%, -50%) scale(0); /* Empieza invisible */
+            opacity: 0;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding: 8vw;
-            position: relative;
-            z-index: 2;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
         }
 
-        /* Cambiada a Syne, con más interlineado y tracking elegante */
-        .huge-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 8.5vw; /* Un pelín más pequeña para que tenga aire */
-            font-weight: 800;
-            line-height: 1.15; /* Más separación: los acentos ya no chocan */
+        /* Texto provisional dentro del cristal (aquí irán tus imágenes/videos futuros) */
+        #preview-content {
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: rgba(0,0,0,0.6);
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: -0.02em; /* Menos comprimida */
+        }
+
+        /* Hero Editorial */
+        .hero {
+            padding: 10vw 8vw 8vw 8vw;
+        }
+
+        .huge-title {
+            font-size: 6vw; /* Tamaño sofisticado, no gigante agresivo */
+            font-weight: 300; /* Peso ligero, muy elegante */
+            line-height: 1.1;
+            letter-spacing: -0.02em;
             color: #1a1a1a;
         }
 
-        /* Un detalle de diseño editorial: poner los apellidos más ligeros o con sangría */
-        .huge-title span {
-            display: block;
-            font-weight: 700;
-            opacity: 0.9;
-            padding-left: 4vw; /* Efecto escalonado de fanzine */
+        .huge-title strong {
+            font-weight: 500;
         }
 
         .manifesto {
-            margin-top: 6vh;
-            max-width: 520px;
-            font-size: 1.25rem;
+            margin-top: 4vh;
+            max-width: 480px;
+            font-size: 1.15rem;
             font-weight: 300;
             line-height: 1.6;
-            color: #444444;
+            color: #666666;
         }
 
-        /* Bento Grid */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
+        /* Estructura de Lista de Autor (Adiós al Bento) */
+        .projects-list {
+            margin-top: 5vh;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding: 0 8vw 15vh 8vw;
-            position: relative;
-            z-index: 2;
         }
 
-        /* Tarjetas de Vidrio */
-        .bento-item {
-            background: rgba(255, 255, 255, 0.15); 
-            border: 1px solid rgba(255, 255, 255, 0.5); 
-            backdrop-filter: blur(25px); 
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 32px;
-            padding: 50px;
-            min-height: 380px;
+        /* Filas de proyectos como en un libro índice */
+        .project-row {
             display: flex;
-            align-items: flex-end;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.01), inset 0 1px 0 rgba(255,255,255,0.6);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, background-color 0.4s;
+            transition: padding 0.4s ease;
         }
 
-        .bento-item.large {
-            grid-column: span 2;
-            min-height: 480px;
+        .project-left h3 {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            transition: transform 0.4s ease;
         }
 
-        .project-info {
-            position: relative;
-            z-index: 3;
-        }
-
-        /* Títulos de proyectos también en Syne con personalidad */
-        .project-info h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.4rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            color: #1a1a1a;
-        }
-
-        .project-info p {
-            color: #555555;
-            font-weight: 300;
+        .project-right p {
             font-size: 1rem;
+            font-weight: 300;
+            color: #666666;
         }
 
-        .bento-item:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255, 255, 255, 0.8);
-            background-color: rgba(255, 255, 255, 0.25);
+        /* Interacción sutil al pasar el ratón por la fila */
+        .project-row:hover {
+            padding-left: 20px; /* Desplazamiento elegante hacia la derecha */
+        }
+        
+        .project-row:hover .project-left h3 {
+            transform: scale(1.02);
         }
     </style>
 </head>
 <body>
 
-    <div id="custom-point"></div>
-    <div id="tornasol-blur"></div>
+    <div id="custom-cursor"></div>
+    
+    <!-- El contenedor de vidrio flotante que reaccionará al ratón -->
+    <div id="project-preview">
+        <div id="preview-content">[ Vista Previa ]</div>
+    </div>
 
     <section class="hero">
-        <!-- Estructuramos el nombre en bloques para que tenga ritmo visual -->
-        <h1 class="huge-title">
-            Andrea<br>
-            <span>Méndez Marí</span>
-        </h1>
-        <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
+        <h1 class="huge-title">Andrea <strong>Méndez Marí</strong></h1>
+        <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Dirección de arte, packaging conceptual y proyectos editoriales con un enfoque limpio, sensible y contemporáneo.</p>
     </section>
 
-    <section class="bento-grid">
-        <div class="bento-item large" data-click-color="#e6ded9"> 
-            <div class="project-info">
-                <h3>CATBOX</h3>
-                <p>Packaging & Branding Conceptual</p>
+    <!-- Listado sofisticado con degradados clarísimos al hacer click -->
+    <section class="projects-list">
+        
+        <div class="project-row" data-name="CatBox" data-bg="#f5ede9">
+            <div class="project-left">
+                <h3>CatBox</h3>
+            </div>
+            <div class="project-right">
+                <p>Packaging & Branding</p>
             </div>
         </div>
-        <div class="bento-item" data-click-color="#dae2da"> 
-            <div class="project-info">
-                <h3>KM 0</h3>
-                <p>Diseño Editorial & Epub</p>
+
+        <div class="project-row" data-name="Km 0" data-bg="#edf0ed">
+            <div class="project-left">
+                <h3>Km 0</h3>
+            </div>
+            <div class="project-right">
+                <p>Diseño Editorial</p>
             </div>
         </div>
-        <div class="bento-item" data-click-color="#d6dae2"> 
-            <div class="project-info">
-                <h3>CB HOYO COLLAB</h3>
-                <p>Animación Web & Contenido Digital</p>
+
+        <div class="project-row" data-name="CB Hoyo" data-bg="#ebedf2">
+            <div class="project-left">
+                <h3>CB Hoyo Collab</h3>
+            </div>
+            <div class="project-right">
+                <p>Contenido Digital & Animación</p>
             </div>
         </div>
+
+        <div class="project-row" data-name="WOMAD" data-bg="#f5f0eb">
+            <div class="project-left">
+                <h3>WOMAD Festival</h3>
+            </div>
+            <div class="project-right">
+                <p>Identidad Visual</p>
+            </div>
+        </div>
+
     </section>
 
     <script>
-        const point = document.getElementById('custom-point');
-        const tornasol = document.getElementById('tornasol-blur');
+        const cursor = document.getElementById('custom-cursor');
+        const preview = document.getElementById('project-preview');
+        const previewContent = document.getElementById('preview-content');
         const body = document.body;
         
+        // El cursor y el bloque de vidrio siguen al ratón con suavidad
         document.addEventListener('mousemove', (e) => {
-            tornasol.style.opacity = '0.85';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
             
-            point.style.left = e.clientX + 'px';
-            point.style.top = e.clientY + 'px';
-            
-            tornasol.style.left = e.clientX + 'px';
-            tornasol.style.top = e.clientY + 'px';
+            // La ventana de cristal sigue al ratón con un desfase sutil (física líquida)
+            preview.style.left = (e.clientX + 20) + 'px';
+            preview.style.top = (e.clientY + 20) + 'px';
         });
 
-        document.addEventListener('mouseleave', () => {
-            tornasol.style.opacity = '0';
-        });
-
-        const bentoItems = document.querySelectorAll('.bento-item');
+        const rows = document.querySelectorAll('.project-row');
         
-        bentoItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const clickColor = item.getAttribute('data-click-color');
-                body.style.backgroundColor = clickColor; 
+        rows.forEach(row => {
+            // Al entrar en la fila, se despliega el cristal con el nombre del proyecto
+            row.addEventListener('mouseenter', () => {
+                const name = row.getAttribute('data-name');
+                previewContent.textContent = name;
+                
+                preview.style.transform = 'translate(0%, 0%) scale(1)';
+                preview.style.opacity = '1';
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.backgroundColor = 'rgba(0,0,0,0.05)';
             });
             
-            item.addEventListener('mouseenter', () => {
-                point.style.transform = 'translate(-50%, -50%) scale(1.8)';
-                point.style.backgroundColor = '#ffffff'; 
+            // Al salir, el cristal se esconde suavemente
+            row.addEventListener('mouseleave', () => {
+                preview.style.transform = 'translate(0%, 0%) scale(0)';
+                preview.style.opacity = '0';
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = 'transparent';
             });
-            item.addEventListener('mouseleave', () => {
-                point.style.transform = 'translate(-50%, -50%) scale(1)';
-                point.style.backgroundColor = '#1a1a1a';
+
+            // Al hacer click, el fondo de la web se tiñe de un degradado pastel super clarito
+            row.addEventListener('click', () => {
+                const bgColors = row.getAttribute('data-bg');
+                body.style.backgroundColor = bgColors;
             });
         });
     </script>
