@@ -47,16 +47,15 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 10001;
-            mix-blend-mode: difference; /* Hace el efecto mágico de inversión de color */
+            mix-blend-mode: difference;
             transition: transform 0.15s ease-out;
         }
 
-        /* 2. EL EFECTO ARCOÍRIS TORNASOLADO MARCADO */
+        /* 2. EL EFECTO ARCOÍRIS TORNASOLADO */
         #tornasol-blur {
             position: fixed;
             width: 450px;
             height: 450px;
-            /* Espectro cromático potente tipo CD / Holográfico */
             background: conic-gradient(from 0deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #ff9a9e);
             border-radius: 50%;
             z-index: -1;
@@ -69,7 +68,7 @@
 
         /* Hero Section */
         .hero {
-            min-height: 90vh;
+            min-height: 95vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -78,16 +77,30 @@
             z-index: 2;
         }
 
-        /* Título potente, grande, pero con interlineado corregido para los acentos */
+        /* ANIMACIÓN DE ENTRADA PARA EL TÍTULO */
         .huge-title {
-            font-size: 10vw;
+            font-size: 8.5vw; /* Ajustado para que quepa en una línea */
             font-weight: 900;
-            line-height: 1.15; /* Más aire para que los acentos respiren perfectos */
+            line-height: 1;
             text-transform: uppercase;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.04em;
             color: #1a1a1a;
+            
+            /* Efecto de aparición fluida */
+            animation: entradaRevelacion 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
         }
 
+        @keyframes entradaRevelacion {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animación de entrada más lenta para la descripción */
         .manifesto {
             margin-top: 5vh;
             max-width: 540px;
@@ -95,6 +108,8 @@
             font-weight: 300;
             line-height: 1.6;
             color: #444444;
+            animation: entradaRevelacion 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
         }
 
         /* Grid de Proyectos Bento */
@@ -107,7 +122,7 @@
             z-index: 2;
         }
 
-        /* Tarjetas de Vidrio que refractan el Arcoíris */
+        /* Tarjetas de Vidrio */
         .bento-item {
             background: rgba(255, 255, 255, 0.15); 
             border: 1px solid rgba(255, 255, 255, 0.5); 
@@ -162,11 +177,11 @@
     <div id="tornasol-blur"></div>
 
     <section class="hero">
-        <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
+        <!-- Nombre unificado en una sola línea -->
+        <h1 class="huge-title" id="parallax-title">Andrea Méndez Marí</h1>
         <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
-    <!-- data-click-color cambia sutilmente el fondo general cuando haces CLICK -->
     <section class="bento-grid">
         <div class="bento-item large" data-click-color="#e6ded9"> 
             <div class="project-info">
@@ -192,14 +207,13 @@
         const point = document.getElementById('custom-point');
         const tornasol = document.getElementById('tornasol-blur');
         const body = document.body;
+        const parallaxTitle = document.getElementById('parallax-title');
         
-        // El punto y la mancha arcoíris siguen al ratón
+        // 1. Movimiento del ratón y el arcoíris
         document.addEventListener('mousemove', (e) => {
-            tornasol.style.opacity = '0.9'; // Arcoíris bien marcado
-            
+            tornasol.style.opacity = '0.9';
             point.style.left = e.clientX + 'px';
             point.style.top = e.clientY + 'px';
-            
             tornasol.style.left = e.clientX + 'px';
             tornasol.style.top = e.clientY + 'px';
         });
@@ -208,16 +222,21 @@
             tornasol.style.opacity = '0';
         });
 
+        // 2. ANIMACIÓN DE SCROLL (Efecto Parallax en el título)
+        window.addEventListener('scroll', () => {
+            let value = window.scrollY;
+            // Desplaza el título sutilmente hacia abajo a medida que bajas
+            parallaxTitle.style.transform = `translateY(${value * 0.25}px)`;
+        });
+
+        // 3. Interacciones de las tarjetas
         const bentoItems = document.querySelectorAll('.bento-item');
-        
         bentoItems.forEach(item => {
-            // Al hacer click, cambia el fondo ligeramente
             item.addEventListener('click', () => {
                 const clickColor = item.getAttribute('data-click-color');
                 body.style.backgroundColor = clickColor; 
             });
             
-            // Reacción visual al entrar en las tarjetas
             item.addEventListener('mouseenter', () => {
                 point.style.transform = 'translate(-50%, -50%) scale(2)';
             });
