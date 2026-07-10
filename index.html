@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrea Méndez Marí — Portafolio</title>
     
+    <!-- Conectamos Syne para titulares y Outfit para textos limpios -->
     <link rel=preconnect href="https://fonts.googleapis.com">
     <link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;800;900&display=swap" rel=stylesheet>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&family=Syne:wght@700;800&display=swap" rel=stylesheet>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Ocultamos el cursor por defecto solo para usar el nuestro customizado */
         @media (pointer: fine) {
             body, a, div, section { cursor: none !important; }
         }
@@ -24,7 +24,6 @@
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
-            /* Transición suave para cuando hagamos clic y cambie el fondo */
             transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -39,61 +38,71 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 1. EL PUNTO DEL RATÓN (VISIBLE Y PRECISO) */
+        /* 1. EL PUNTO DEL RATÓN (PRECISO) */
         #custom-point {
             width: 8px;
             height: 8px;
-            background-color: #000000;
+            background-color: #1a1a1a;
             border-radius: 50%;
             position: fixed;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 10001; /* Por encima de todo */
+            z-index: 10001;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
-        /* 2. EL HALO ARCOÍRIS TORNASOLADO SUBTERRÁNEO */
+        /* 2. EL HALO ARCOÍRIS TORNASOLADO */
         #tornasol-blur {
             position: fixed;
-            width: 400px;
-            height: 400px;
+            width: 450px;
+            height: 450px;
             background: conic-gradient(from 0deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #ff9a9e);
             border-radius: 50%;
             z-index: -1;
-            filter: blur(60px);
+            filter: blur(65px);
             opacity: 0;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            /* Retraso físico sutil para que parezca líquido al seguir al punto negro */
-            transition: opacity 0.5s ease, transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.5s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Hero */
         .hero {
-            min-height: 85vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 6vw;
+            padding: 8vw;
             position: relative;
             z-index: 2;
         }
 
+        /* Cambiada a Syne, con más interlineado y tracking elegante */
         .huge-title {
-            font-size: 11vw;
-            font-weight: 900;
-            line-height: 0.95;
+            font-family: 'Syne', sans-serif;
+            font-size: 8.5vw; /* Un pelín más pequeña para que tenga aire */
+            font-weight: 800;
+            line-height: 1.15; /* Más separación: los acentos ya no chocan */
             text-transform: uppercase;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.02em; /* Menos comprimida */
             color: #1a1a1a;
         }
 
+        /* Un detalle de diseño editorial: poner los apellidos más ligeros o con sangría */
+        .huge-title span {
+            display: block;
+            font-weight: 700;
+            opacity: 0.9;
+            padding-left: 4vw; /* Efecto escalonado de fanzine */
+        }
+
         .manifesto {
-            margin-top: 5vh;
-            max-width: 540px;
-            font-size: 1.3rem;
+            margin-top: 6vh;
+            max-width: 520px;
+            font-size: 1.25rem;
             font-weight: 300;
             line-height: 1.6;
-            color: #555555;
+            color: #444444;
         }
 
         /* Bento Grid */
@@ -101,20 +110,20 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 40px;
-            padding: 0 6vw 15vh 6vw;
+            padding: 0 8vw 15vh 8vw;
             position: relative;
             z-index: 2;
         }
 
-        /* LAS TARJETAS DE VIDRIO (GLASSMORPHISM) */
+        /* Tarjetas de Vidrio */
         .bento-item {
-            background: rgba(255, 255, 255, 0.18); 
+            background: rgba(255, 255, 255, 0.15); 
             border: 1px solid rgba(255, 255, 255, 0.5); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px);
             border-radius: 32px;
             padding: 50px;
-            min-height: 360px;
+            min-height: 380px;
             display: flex;
             align-items: flex-end;
             position: relative;
@@ -125,7 +134,7 @@
 
         .bento-item.large {
             grid-column: span 2;
-            min-height: 460px;
+            min-height: 480px;
         }
 
         .project-info {
@@ -133,10 +142,12 @@
             z-index: 3;
         }
 
+        /* Títulos de proyectos también en Syne con personalidad */
         .project-info h3 {
-            font-size: 2.6rem;
-            font-weight: 900;
-            letter-spacing: -0.03em;
+            font-family: 'Syne', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
             margin-bottom: 6px;
             text-transform: uppercase;
             color: #1a1a1a;
@@ -144,45 +155,45 @@
 
         .project-info p {
             color: #555555;
-            font-weight: 400;
-            font-size: 1.05rem;
+            font-weight: 300;
+            font-size: 1rem;
         }
 
         .bento-item:hover {
             transform: translateY(-6px);
             border-color: rgba(255, 255, 255, 0.8);
-            background-color: rgba(255, 255, 255, 0.28);
+            background-color: rgba(255, 255, 255, 0.25);
         }
     </style>
 </head>
 <body>
 
-    <!-- Tu puntero negro de precisión -->
     <div id="custom-point"></div>
-    
-    <!-- El halo tornasolado que va por detrás flotando -->
     <div id="tornasol-blur"></div>
 
     <section class="hero">
-        <h1 class="huge-title">Andrea<br>Méndez<br>Marí</h1>
+        <!-- Estructuramos el nombre en bloques para que tenga ritmo visual -->
+        <h1 class="huge-title">
+            Andrea<br>
+            <span>Méndez Marí</span>
+        </h1>
         <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
-    <!-- Guardamos el color de fondo para el click en el atributo "data-click-color" -->
     <section class="bento-grid">
-        <div class="bento-item large" data-click-color="#e2dad5"> <!-- Terracota translúcido suave -->
+        <div class="bento-item large" data-click-color="#e6ded9"> 
             <div class="project-info">
                 <h3>CATBOX</h3>
                 <p>Packaging & Branding Conceptual</p>
             </div>
         </div>
-        <div class="bento-item" data-click-color="#dae2da"> <!-- Verde musgo translúcido sutil -->
+        <div class="bento-item" data-click-color="#dae2da"> 
             <div class="project-info">
                 <h3>KM 0</h3>
                 <p>Diseño Editorial & Epub</p>
             </div>
         </div>
-        <div class="bento-item" data-click-color="#d5dae2"> <!-- Azul empolvado translúcido sutil -->
+        <div class="bento-item" data-click-color="#d6dae2"> 
             <div class="project-info">
                 <h3>CB HOYO COLLAB</h3>
                 <p>Animación Web & Contenido Digital</p>
@@ -195,15 +206,12 @@
         const tornasol = document.getElementById('tornasol-blur');
         const body = document.body;
         
-        // Movimiento sincronizado: el punto va rígido, el tornasol va fluido por detrás
         document.addEventListener('mousemove', (e) => {
             tornasol.style.opacity = '0.85';
             
-            // Punto negro preciso
             point.style.left = e.clientX + 'px';
             point.style.top = e.clientY + 'px';
             
-            // Halo arcoíris flotante
             tornasol.style.left = e.clientX + 'px';
             tornasol.style.top = e.clientY + 'px';
         });
@@ -212,23 +220,21 @@
             tornasol.style.opacity = '0';
         });
 
-        // LÓGICA DEL CLIC: Cambiar color de fondo ligeramente según el proyecto
         const bentoItems = document.querySelectorAll('.bento-item');
         
         bentoItems.forEach(item => {
             item.addEventListener('click', () => {
                 const clickColor = item.getAttribute('data-click-color');
-                body.style.backgroundColor = clickColor; // Tiñe el fondo general al presionar
+                body.style.backgroundColor = clickColor; 
             });
             
-            // Al pasar por encima, agrandamos sutilmente el punto negro para dar feedback visual
             item.addEventListener('mouseenter', () => {
                 point.style.transform = 'translate(-50%, -50%) scale(1.8)';
-                point.style.backgroundColor = '#ffffff'; // Se vuelve blanco sobre el vidrio para contrastar
+                point.style.backgroundColor = '#ffffff'; 
             });
             item.addEventListener('mouseleave', () => {
                 point.style.transform = 'translate(-50%, -50%) scale(1)';
-                point.style.backgroundColor = '#000000';
+                point.style.backgroundColor = '#1a1a1a';
             });
         });
     </script>
