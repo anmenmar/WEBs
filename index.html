@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrea Méndez Marí — Portafolio</title>
+    <title>Andrea Méndez — Portafolio</title>
     
     <link rel=preconnect href="https://fonts.googleapis.com">
     <link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
@@ -77,39 +77,47 @@
             z-index: 2;
         }
 
-        /* ANIMACIÓN DE ENTRADA PARA EL TÍTULO */
+        /* CONTENEDOR DE LA ANIMACIÓN DE ENTRADA */
+        .title-container {
+            overflow: hidden; /* Oculta las letras mientras suben */
+            margin-bottom: 10px;
+        }
+
+        /* Tu nombre rediseñado: "Méndez" debajo de "Andrea" y sin "Marí" */
         .huge-title {
-            font-size: 8.5vw; /* Ajustado para que quepa en una línea */
+            font-size: 11vw;
             font-weight: 900;
-            line-height: 1;
+            line-height: 0.95; 
             text-transform: uppercase;
             letter-spacing: -0.04em;
             color: #1a1a1a;
             
-            /* Efecto de aparición fluida */
-            animation: entradaRevelacion 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(30px);
-            will-change: transform, opacity;
+            /* Animación de Entrada Fluida al cargar la web */
+            animation: subirRevelar 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(100%); /* Empieza completamente escondido abajo */
+            will-change: transform;
         }
 
-        @keyframes entradaRevelacion {
+        @keyframes subirRevelar {
             to {
-                opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0%);
             }
         }
 
-        /* Animación de entrada más lenta para la descripción */
+        /* La descripción entra un pelín más tarde suavemente */
         .manifesto {
-            margin-top: 5vh;
+            margin-top: 4vh;
             max-width: 540px;
             font-size: 1.3rem;
             font-weight: 300;
             line-height: 1.6;
             color: #444444;
-            animation: entradaRevelacion 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
+            animation: fadeInSutil 1s ease 0.6s forwards; /* Aparece a los 0.6 segundos */
+        }
+
+        @keyframes fadeInSutil {
+            to { opacity: 1; }
         }
 
         /* Grid de Proyectos Bento */
@@ -122,7 +130,7 @@
             z-index: 2;
         }
 
-        /* Tarjetas de Vidrio */
+        /* Tarjetas de Vidrio (Glassmorphism) */
         .bento-item {
             background: rgba(255, 255, 255, 0.15); 
             border: 1px solid rgba(255, 255, 255, 0.5); 
@@ -177,8 +185,14 @@
     <div id="tornasol-blur"></div>
 
     <section class="hero">
-        <!-- Nombre unificado en una sola línea -->
-        <h1 class="huge-title" id="parallax-title">Andrea Méndez Marí</h1>
+        <!-- Estructura limpia: Andrea arriba, Méndez abajo -->
+        <div class="title-container">
+            <h1 class="huge-title">Andrea</h1>
+        </div>
+        <div class="title-container">
+            <h1 class="huge-title" style="animation-delay: 0.15s;">Méndez</h1> <!-- Un mini retraso para que suba escalonado -->
+        </div>
+        
         <p class="manifesto">Diseñadora gráfica y creativa multidisciplinar. Desarrollo marcas con concepto, packaging estructural e historias visuales que saltan del papel a la pantalla.</p>
     </section>
 
@@ -207,7 +221,6 @@
         const point = document.getElementById('custom-point');
         const tornasol = document.getElementById('tornasol-blur');
         const body = document.body;
-        const parallaxTitle = document.getElementById('parallax-title');
         
         // 1. Movimiento del ratón y el arcoíris
         document.addEventListener('mousemove', (e) => {
@@ -222,11 +235,15 @@
             tornasol.style.opacity = '0';
         });
 
-        // 2. ANIMACIÓN DE SCROLL (Efecto Parallax en el título)
+        // 2. ANIMACIÓN DE SCROLL INTEGRADA POR CÓDIGO DIRECTO
+        const titles = document.querySelectorAll('.huge-title');
         window.addEventListener('scroll', () => {
-            let value = window.scrollY;
-            // Desplaza el título sutilmente hacia abajo a medida que bajas
-            parallaxTitle.style.transform = `translateY(${value * 0.25}px)`;
+            let scrollPos = window.scrollY;
+            // Hace que las letras se deslicen suavemente hacia un lado al hacer scroll
+            titles.forEach((title, index) => {
+                let speed = (index + 1) * 0.15;
+                title.style.transform = `translateX(${scrollPos * speed}px)`;
+            });
         });
 
         // 3. Interacciones de las tarjetas
